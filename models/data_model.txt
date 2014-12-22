@@ -1,0 +1,22 @@
+class: guest
+	- name
+	- nationality
+	- gender
+	- birthday
+	- Id
+	- Notes
+
+class: stay
+	- check in date
+	- check out date
+	- price
+	- shift
+	- room/bed
+	- group??
+	belongs to guest
+	belongs to beds
+	
+class: beds
+	- room name
+	- bed number
+	

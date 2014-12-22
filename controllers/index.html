@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% autoescape true %}
+
+<head>
+  <link type="text/css" rel="stylesheet" href="/assets/css/main.css" />
+</head>
+
+<html>
+  <body>
+    {% for greeting in greetings %}
+      {% if greeting.author %}
+        <b>{{ greeting.author.nickname() }}</b> wrote:
+      {% else %}
+       An anonymous person wrote:
+      {% endif %}
+      <blockquote>{{ greeting.content }}</blockquote>
+    {% endfor %}
+
+    <form action="/sign?guestbook_name={{ guestbook_name }}" method="post">
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Sign Guestbook"></div>
+    </form>
+
+    <hr>
+
+    <form>Guestbook name:
+      <input value="{{ guestbook_name }}" name="guestbook_name">
+      <input type="submit" value="switch">
+    </form>
+
+    <a href="{{ url|safe }}">{{ url_linktext }}</a>
+	
+	<hr>
+	
+	<form action="/addGuest" method="post">
+	Name: <br>
+      <div><textarea name="name" rows="3" cols="60"></textarea></div>
+	  Room <br>
+	  <div><textarea name="room" rows="1" cols="6"></textarea></div>
+	  Bed Number <br>
+	  <div><textarea name="bed_number" rows="1" cols="6"></textarea></div>
+	  
+      <div><input type="submit" value="Add guest"></div>
+    </form>
+	
+	<hr>
+	
+	{% for full in booked %}
+	
+		{{ full }}
+	
+	{% endfor %}
+	
+	<table style="width:100%">
+		  <tr>
+			<th>Name</th>
+			<th>Room</th>		
+			<th>Number</th>
+		  </tr>
+	{% for bed in beds %}
+	
+		
+		  <tr>
+			<td>Empty</td>
+			<td>{{bed.room}}</td>		
+			<td>{{bed.number}}</td>
+		  </tr>
+	
+	{% endfor %}
+	
+	</table>
+	
+	
+	{% for booking in bookings %}
+	
+		<b>{{ booking.guest.name }}</b> is at BOBs in room {{ booking.bed.room}} and bed number<br>
+		<b>{{ booking.bed.number }}</b><br>
+	
+	{% endfor %}
+
+  </body>
+</html>
+{% endautoescape %}
