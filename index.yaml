@@ -10,6 +10,44 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Bed
+  properties:
+  - name: number
+  - name: room
+
+- kind: Bed
+  properties:
+  - name: room
+  - name: number
+
+- kind: Booking
+  properties:
+  - name: bed.number
+  - name: bed.room
+  - name: check_in_date
+
+- kind: Booking
+  properties:
+  - name: bed.number
+  - name: bed.room
+  - name: check_out_date
+
+- kind: Booking
+  properties:
+  - name: bed.number
+  - name: check_in_date
+
+- kind: Booking
+  properties:
+  - name: bed.room
+  - name: check_in_date
+
+- kind: Booking
+  ancestor: yes
+  properties:
+  - name: date
+    direction: desc
+
 - kind: Greeting
   ancestor: yes
   properties:
