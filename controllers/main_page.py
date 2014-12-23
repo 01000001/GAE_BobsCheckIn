@@ -33,13 +33,17 @@ class MainPage(webapp2.RequestHandler):
 		greetings_query = Greeting.query(
             ancestor=guestbook_key(guestbook_name)).order(-Greeting.date)
 
-###############			
+##############
+#Some hard-coded values 
+##############		
  
 		DEFAULT_DATE = datetime.datetime.strptime(urllib.quote_plus(guestbook_name), '%Y%m%d').date()
 		EMTY_ROOM_DATE = date(1000,1,1)
 		
 ##############
-		#Queries
+#Queries
+##############
+
 		greetings = greetings_query.fetch(10)
 		
 		bookings_query = Booking.query()
@@ -48,19 +52,40 @@ class MainPage(webapp2.RequestHandler):
 		beds_query = Bed.query().order(Bed.room).order(Bed.number)
 		beds = beds_query.fetch()
 		
-		
-		####
+
+##############
+#Logic
+##############
+
 		# Build a dictionary that will collect all the necessary data to be displayed
 		display = {}
 		
+		per_room = {}
+		
 		#make unique key per bed for the dictionary
 		i = 0
+		
+		#check if different room
+		which_room = beds[0].room
+		
+		#has it changed?
+		has_room_changed = beds[0].room
 
-#######		
-		#Logic to display guests for a given day
+		#Logic to display guests for a given day, values will be stored in display
 		for bed in beds:
 			
+			#model for the values that are going to be displayed
 			model = {}
+			
+			#check if room has changed
+			has_room_changed = bed.room
+			
+			if has_room_changed != which_room:
+				per_room[which_room] = display
+				
+				#set variables to satisfy logic
+				which_room = has_room_changed
+				display = {}
 			
 			#if there is a booking for the given bed
 			#since GAE does not allow me to include more 
@@ -108,15 +133,22 @@ class MainPage(webapp2.RequestHandler):
 			
 			#increase unique key per bed for the dictionary
 			i = i+1
-		
-#		sorted_display = collections.OrderedDict(sorted(display.items()))
+			
+		per_room[which_room] = display
+
+##############
+#Set template values and display
+##############
+
+		#order per_room dictionary by keys
+		ordered_per_room = collections.OrderedDict(sorted(per_room.items()))
 		
 		template_values = {
             'greetings': greetings,
             'guestbook_name': urllib.quote_plus(guestbook_name),
             'bookings': bookings,
 			'beds' : beds,
-			'display': display,
+			'per_room': ordered_per_room,
 			'DEFAULT_DATE': DEFAULT_DATE,
 			'EMTY_ROOM_DATE' : EMTY_ROOM_DATE,
 			
