@@ -90,8 +90,7 @@ class MainPage(webapp2.RequestHandler):
 			#if there is a booking for the given bed
 			#since GAE does not allow me to include more 
 			#than one in-equivalence queries on different 
-			#properties, have to move part of the logic to the view
-			#(that is checking the stays for a given day)
+			#properties, have to split up logic outside the query
 			
 			#Display guests in their bed that has to check out later then "today"
 			check_bed = bookings_query.filter(
@@ -105,19 +104,34 @@ class MainPage(webapp2.RequestHandler):
 			if check_bed:
 				
 				for found in check_bed:
-			
-					nights = found.check_out_date - DEFAULT_DATE
 				
-					model['guest.name'] = found.guest.name
-					model['bed.room'] = found.bed.room
-					model['bed.number'] = found.bed.number
-					model['nights'] = nights.days
+					#2nd part of booking logic, check if check_in_date <= DEFAULT_DATE
+					if found.check_in_date <= DEFAULT_DATE:
+			
+						nights = found.check_out_date - DEFAULT_DATE
 					
-					if found.check_in_date == DEFAULT_DATE:
-						model['price'] = found.price
+						model['guest.name'] = found.guest.name
+						model['bed.room'] = found.bed.room
+						model['bed.number'] = found.bed.number
+						model['nights'] = nights.days
+						
+						if found.check_in_date == DEFAULT_DATE:
+							model['price'] = found.price
+						else:
+							model['price'] = "-"
+							
+						model['check_in_date'] = found.check_in_date
+						model['check_out_date'] = found.check_out_date
+					
+					#if there is booking but check_in_date <= DEFAULT_DATE
 					else:
+						model['guest.name']= "-"
+						model['bed.room'] = bed.room
+						model['bed.number'] = bed.number
+						model['nights'] = "-"
 						model['price'] = "-"
-					model['check_in_date'] = found.check_in_date
+						model['check_in_date'] = EMTY_ROOM_DATE
+						model['check_out_date'] = EMTY_ROOM_DATE
 			
 			#if there is no booking			
 			else:
@@ -128,6 +142,7 @@ class MainPage(webapp2.RequestHandler):
 				model['nights'] = "-"
 				model['price'] = "-"
 				model['check_in_date'] = EMTY_ROOM_DATE
+				model['check_out_date'] = EMTY_ROOM_DATE
 				
 			display[i] = model
 			

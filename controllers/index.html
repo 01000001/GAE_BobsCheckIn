@@ -19,12 +19,38 @@
     <![endif]-->
 
 	<link type="text/css" rel="stylesheet" href="/assets/css/main.css" />
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="assets/js/bootstrap.min.js"></script>
+	
+	<!-- jQuery to get the tables shown -->
+	<script>
+		  $(function () {
+			$('#myTab a:last').tab('show')
+		  })
+	</script>
+	
+	<!-- datepicker -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+<script>
+$(function() {
+    $("#datepicker").datepicker();
+});
+</script>
+
 </head>
 
 <html lang="en">
   <body>
   
 	<div class="container">
+		
+		<div class="demo">
+    <p>Date: <input type="text" id="datepicker"></p>
+</div>
 	
 		<form action="/addGuest?guestbook_name={{ guestbook_name }}" method="post">
 		Name: <br>
@@ -43,7 +69,7 @@
 		  
 		  <div><input type="submit" value="Add guest"></div>
 		</form>
-		
+
 		<hr>
 		
 		<!-- Panel to change between rooms -->
@@ -73,7 +99,6 @@
 			
 				{% for key in per_room[room].keys() %}
 					
-					{% if per_room[room][key]['check_in_date'] <= DEFAULT_DATE or per_room[room][key]['check_in_date'] == EMTY_ROOM_DATE %}
 				
 				  <tr>
 					<td>{{ per_room[room][key]['bed.room'] }}</td>	
@@ -84,7 +109,6 @@
 					
 				  </tr>
 				
-				{% endif %}
 				
 				{% endfor %}
 			
@@ -133,18 +157,6 @@
 		<br>
 	
 	</div>
-
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="assets/js/bootstrap.min.js"></script>
-	
-	<!-- jQuery to get the tables shown -->
-	<script>
-		  $(function () {
-			$('#myTab a:last').tab('show')
-		  })
-	</script>
 	
 
 
