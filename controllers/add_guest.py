@@ -21,6 +21,8 @@ class AddGuest(webapp2.RequestHandler):
 
 		booking.bed = Bed(room = self.request.get('room'), number = int(self.request.get('bed_number')))
 		
+		booking.price = int(self.request.get('price'))
+		
 		booking.put()
 		
 		query_params = {'guestbook_name': guestbook_name}
