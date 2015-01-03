@@ -25,7 +25,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 class MainPage(webapp2.RequestHandler):
 	def get(self):
 	
-		DEFAULT_GUESTBOOK_NAME = 'default_guestbook'
+		DEFAULT_GUESTBOOK_NAME = '20001010'
 	
 		guestbook_name = self.request.get('guestbook_name',
                                           DEFAULT_GUESTBOOK_NAME)	
