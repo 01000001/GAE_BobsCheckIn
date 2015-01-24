@@ -34,12 +34,12 @@
 	
 	<!-- datepicker -->
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
-<script>
-$(function() {
-    $("#datepicker").datepicker();
-});
-</script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+	<script>
+	$(function() {
+		$("#datepicker").datepicker({ dateFormat: 'yymmdd' }).val();
+	});
+	</script>
 
 </head>
 
@@ -48,10 +48,20 @@ $(function() {
   
 	<div class="container">
 		
-		<div class="demo">
-    <p>Date: <input type="text" id="datepicker"></p>
-</div>
+		<div>
+		<form>
+		<p>Date: <input type="text" id="datepicker" size="30" name="guestbook_name"></p>
+		<input type="submit" value="switch">
+		</form>
+		</div>
+		
+		<div>
+
+		<p><a href="new_guest">Add Guest</a>.<br /></p>
+
+		</div>
 	
+		<!-- old guest stuff here
 		<form action="/addGuest?guestbook_name={{ guestbook_name }}" method="post">
 		Name: <br>
 		  <div><textarea name="name" rows="3" cols="60"></textarea></div>
@@ -71,6 +81,8 @@ $(function() {
 		</form>
 
 		<hr>
+		!-->
+		
 		
 		<!-- Panel to change between rooms -->
 		<ul class="nav nav-tabs" role="tablist" id="myTab">
@@ -103,7 +115,9 @@ $(function() {
 				  <tr>
 					<td>{{ per_room[room][key]['bed.room'] }}</td>	
 					<td>{{ per_room[room][key]['bed.number'] }}</td>
+					
 					<td>{{ per_room[room][key]['guest.name'] }}</td>
+					
 					<td>{{ per_room[room][key]['nights'] }}</td>
 					<td>{{ per_room[room][key]['price'] }}</td>
 					
@@ -120,8 +134,8 @@ $(function() {
 		
 		</div>
 		
-		
 		<hr>
+		Just for to get the programming right <br>
 			{% for booking in bookings %}
 			
 			{{booking}}<br>
@@ -142,17 +156,12 @@ $(function() {
 		  <blockquote>{{ greeting.content }}</blockquote>
 		{% endfor %}
 
+		<!-- I'm not using this anymore
 		<form action="/sign?guestbook_name={{ guestbook_name }}" method="post">
 		  <div><textarea name="content" rows="3" cols="60"></textarea></div>
 		  <div><input type="submit" value="Sign Guestbook"></div>
 		</form>
-
-		<hr>
-
-		<form>Guestbook name:
-		  <input value="{{ guestbook_name }}" name="guestbook_name">
-		  <input type="submit" value="switch">
-		</form>
+		!-->
 		
 		<br>
 	

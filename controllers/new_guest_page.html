@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% autoescape true %}
+
+<head>
+
+<!-- datepicker -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+	<script>
+	$(function() {
+		$("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' }).val();
+		$("#datepicker2").datepicker({ dateFormat: 'dd/mm/yy' }).val();
+	});
+	</script>
+
+</head>
+
+
+<html lang="en">
+  <body>
+  
+	<div class="container">
+	
+		<form action="/addGuest?guestbook_name={{ guestbook_name }}" method="post">
+		Name: <br>
+		  <div><textarea name="name" rows="3" cols="60"></textarea></div>
+		  Room <br>
+		  <div><textarea name="room" rows="1" cols="6"></textarea></div>
+		  Bed Number <br>
+		  <div><textarea name="bed_number" rows="1" cols="6"></textarea></div>
+		  
+		  Check In date: <input type="date" name="check_in_date" id="datepicker"><br>
+		  
+		  Check Out Date: <input type="date" name="check_out_date" id="datepicker2"><br>
+		  <br>
+		  Price <br>
+		  <div><textarea name="price" rows="1" cols="6"></textarea></div>
+		  
+		  <div><input type="submit" value="Add guest"></div>
+		</form>
+
+	</div>
+
+  </body>
+</html>
+{% endautoescape %}

@@ -43,7 +43,7 @@ class InitBeds(webapp2.RequestHandler):
 		while i <=10:
 			bed = Bed()
 			bed.number = i
-			bed.room = "B"
+			bed.room = "C"
 			
 			bed.put()
 			i = i+1
@@ -54,5 +54,6 @@ application = webapp2.WSGIApplication([
 		('/', main_page.MainPage),
 		('/sign', Guestbook),
 		('/initBeds', InitBeds),
-		('/addGuest', add_guest.AddGuest),
+		('/addGuest', add_guest.AddGuest), #method to add a guest
+		('/new_guest', add_guest.NewGuestPage) #display add guest page
 	],debug=True)
