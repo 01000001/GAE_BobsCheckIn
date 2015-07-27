@@ -38,9 +38,9 @@ class AddGuest(webapp2.RequestHandler):
 		
 		
 		#convert check in date with datetime 
-		booking.check_in_date = datetime.datetime.strptime(self.request.get('check_in_date'), '%d/%m/%Y').date()
+		booking.check_in_date = datetime.datetime.strptime(self.request.get('check_in_date'), '%Y-%m-%d').date()
 		
-		booking.check_out_date = datetime.datetime.strptime(self.request.get('check_out_date'), '%d/%m/%Y').date()
+		booking.check_out_date = datetime.datetime.strptime(self.request.get('check_out_date'), '%Y-%m-%d').date()
 		
 		booking.put()
 		
@@ -55,9 +55,14 @@ class NewGuestPage(webapp2.RequestHandler):
 	
 		guestbook_name = self.request.get('guestbook_name',
                                           DEFAULT_GUESTBOOK_NAME)
+
+
+		beds_query = Bed.query().order(Bed.room).order(Bed.number)
+		available_rooms = beds_query.fetch()
 	
 		template_values = {
-				'guestbook_name': urllib.quote_plus(guestbook_name)
+				'guestbook_name': urllib.quote_plus(guestbook_name),
+                                'available_rooms': available_rooms
 				
 			}
 	

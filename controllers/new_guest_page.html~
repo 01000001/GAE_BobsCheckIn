@@ -31,7 +31,7 @@
 			
 			{% for room in available_rooms %}
 			
-			<option value="{{room}}">{{room.room}}</option>
+			<option value="{{room}}">{{room}}</option>
 		  
 			{% endfor %}
 			

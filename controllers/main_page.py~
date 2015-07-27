@@ -40,6 +40,9 @@ class MainPage(webapp2.RequestHandler):
 		DEFAULT_DATE = datetime.datetime.strptime(urllib.quote_plus(guestbook_name), '%Y%m%d').date()
 		EMTY_ROOM_DATE = date(1000,1,1)
 		
+		bed = Bed(room = 'A', number = 1)
+
+		bed.put()
 		
 ##############
 #Queries
